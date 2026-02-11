@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer>
+   <footer className="footer">
       {/* Doormat Navigation */}
       <div className="doormat">
         <h3>Doormat Navigation</h3>

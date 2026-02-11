@@ -1,7 +1,9 @@
 function Main() {
   return (
-    <main>
-      Main content
+     <main className="main">
+      <div className="card">Dish 1</div>
+      <div className="card">Dish 2</div>
+      <div className="card">Dish 3</div>
     </main>
   );
 }
