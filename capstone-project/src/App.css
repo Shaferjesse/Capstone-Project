@@ -69,3 +69,25 @@ h1 { font-size: 40pt; /* Shrink big titles so they don't wrap weirdly */ } }
 #about h2 { color: #495E57; font-family: 'Markazi Text', serif; font-size: 32pt; margin-top: -10px; }
 
 #about p { max-width: 400px; font-family: 'Karla', sans-serif; font-size: 14pt; line-height: 1.5; }
+
+/* 6. FOOTER STYLES */ .footer { display: flex; justify-content: space-around; align-items: flex-start; padding: 60px 20px; background-color: #495E57; color: #EDEFEE; margin-top: 40px; }
+
+.footer h3 { color: #F4CE14; /* Using your Lemon Yellow for footer headings */ font-size: 16pt; margin-bottom: 20px; }
+
+.doormat ul { list-style: none; padding: 0; }
+
+.doormat li { margin-bottom: 15px; }
+
+.doormat a { text-decoration: none; color: #EDEFEE; font-family: 'Karla', sans-serif; transition: 0.3s; }
+
+.doormat a:hover { color: #F4CE14; }
+
+.contact p { font-size: 14pt; margin-bottom: 10px; color: #EDEFEE; }
+
+.social-buttons { display: flex; flex-direction: column; gap: 10px; }
+
+.social-buttons button { background-color: #F4CE14; border: none; border-radius: 8px; padding: 8px 15px; font-family: 'Karla', sans-serif; font-weight: bold; cursor: pointer; transition: 0.3s; }
+
+.social-buttons button:hover { background-color: #eed330; transform: translateY(-2px); }
+
+/* Update to your Mobile Styles */ @media (max-width: 600px) { .footer { flex-direction: column; align-items: center; text-align: center; gap: 40px; } }

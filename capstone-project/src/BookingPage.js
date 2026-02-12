@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React from "react";
+import BookingForm from "./BookingForm";
 
-const BookingPage = () => { const [date, setDate] = useState("");
-
-return ( <main> <h1>Reserve a Table</h1> <form> <label htmlFor="res-date">Choose date</label> <input type="date" id="res-date" value={date} onChange={(e) => setDate(e.target.value)} /> <input type="submit" value="Make Your reservation" /> </form> </main> ); };
+const BookingPage = ({ availableTimes, dispatch, submitForm }) => {
+  return (
+    <BookingForm
+      availableTimes={availableTimes}
+      dispatch={dispatch}
+      submitForm={submitForm}
+    />
+  );
+};
 
 export default BookingPage;
