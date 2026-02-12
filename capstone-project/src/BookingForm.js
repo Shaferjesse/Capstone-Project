@@ -1,5 +1,17 @@
 import React, { useState } from "react";
 
+/* ---------- Validation Functions (Step 2 Requirement) ---------- */
+
+export const validateEmail = (email) => {
+  return /\S+@\S+\.\S+/.test(email);
+};
+
+export const validateName = (name) => {
+  return name.trim().length > 0;
+};
+
+/* ---------- Helper ---------- */
+
 const formatTime = (time24) => {
   const [hour, minute] = time24.split(":");
   const h = parseInt(hour, 10);
@@ -7,6 +19,8 @@ const formatTime = (time24) => {
   const h12 = h % 12 || 12;
   return h12 + ":" + minute + " " + ampm;
 };
+
+/* ---------- Component ---------- */
 
 const BookingForm = ({ availableTimes = [], dispatch, submitForm }) => {
   const [fullName, setFullName] = useState("");
@@ -20,7 +34,17 @@ const BookingForm = ({ availableTimes = [], dispatch, submitForm }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!fullName || !email || !resDate || !resTime) {
+    if (!validateName(fullName)) {
+      setErrorMessage("Please enter a valid name.");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setErrorMessage("Please enter a valid email.");
+      return;
+    }
+
+    if (!resDate || !resTime) {
       setErrorMessage("Please fill in all required fields.");
       return;
     }
@@ -38,63 +62,90 @@ const BookingForm = ({ availableTimes = [], dispatch, submitForm }) => {
   };
 
   return (
-    <section>
-      <h2>Reserve a Table</h2>
+    <section aria-labelledby="booking-heading">
+      <h2 id="booking-heading">Reserve a Table</h2>
 
       <form onSubmit={handleSubmit}>
-        <label>
-          Full Name*
-          <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-        </label>
+        {/* Full Name */}
+        <label htmlFor="fullName">Full Name*</label>
+        <input
+          id="fullName"
+          type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          required
+        />
 
-        <label>
-          Email*
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
+        {/* Email */}
+        <label htmlFor="email">Email*</label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-        <label>
-          Phone
-          <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
-        </label>
+        {/* Phone */}
+        <label htmlFor="phone">Phone</label>
+        <input
+          id="phone"
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
 
-        <label>
-          Date*
-          <input
-            type="date"
-            value={resDate}
-            onChange={(e) => {
-              setResDate(e.target.value);
-              dispatch({ type: "UPDATE_TIMES", date: e.target.value });
-            }}
-          />
-        </label>
+        {/* Date */}
+        <label htmlFor="resDate">Date*</label>
+        <input
+          id="resDate"
+          type="date"
+          value={resDate}
+          onChange={(e) => {
+            setResDate(e.target.value);
+            dispatch({ type: "UPDATE_TIMES", date: e.target.value });
+          }}
+          required
+        />
 
-        <label>
-          Time*
-          <select value={resTime} onChange={(e) => setResTime(e.target.value)}>
-            <option value="">Select time</option>
-            {availableTimes?.map((time) => (
-              <option key={time} value={time}>
-                {formatTime(time)}
-              </option>
-            ))}
-          </select>
-        </label>
+        {/* Time */}
+        <label htmlFor="resTime">Time*</label>
+        <select
+          id="resTime"
+          value={resTime}
+          onChange={(e) => setResTime(e.target.value)}
+          required
+        >
+          <option value="">Select time</option>
+          {availableTimes?.map((time) => (
+            <option key={time} value={time}>
+              {formatTime(time)}
+            </option>
+          ))}
+        </select>
 
-        <label>
-          Guests
-          <input
-            type="number"
-            min="1"
-            max="10"
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
-          />
-        </label>
+        {/* Guests */}
+        <label htmlFor="guests">Guests</label>
+        <input
+          id="guests"
+          type="number"
+          min="1"
+          max="10"
+          value={guests}
+          onChange={(e) => setGuests(e.target.value)}
+        />
 
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        {/* Error Message */}
+        {errorMessage && (
+          <p role="alert" style={{ color: "red" }}>
+            {errorMessage}
+          </p>
+        )}
 
-        <button type="submit">Reserve</button>
+        {/* Submit Button */}
+        <button type="submit" aria-label="On Click">
+          Reserve
+        </button>
       </form>
     </section>
   );
